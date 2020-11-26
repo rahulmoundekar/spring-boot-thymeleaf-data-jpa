@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div class="container">
+
+		<div class="alert alert-success" th:if="${success!=null}">
+			<strong th:text="${success}"></strong>
+		</div>
+		<div class="alert alert-danger" th:if="${error!=null}">
+			<strong th:text="${error}"></strong>
+		</div>
+		<form class="form-horizontal" th:action="@{/employee}"
+			th:object="${employee}" method="POST">
+			<fieldset>
+
+				<!-- Form Name -->
+				<legend>Form Name</legend>
+
+				<!-- Text input-->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="id"></label>
+					<div class="col-md-4">
+						<input id="id" th:field="*{id}" type="hidden"
+							class="form-control input-md">
+					</div>
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="name">Enter Name</label>
+					<div class="col-md-4">
+						<input id="name" th:field="*{name}" type="text"
+							placeholder="Enter Name" class="form-control input-md">
+						<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+							class="text-danger"></span>
+					</div>
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="mobile">Enter
+						Mobile</label>
+					<div class="col-md-4">
+						<input id="mobile" th:field="*{mobile}" type="text"
+							placeholder="Enter Mobile" class="form-control input-md">
+						<span th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"
+							class="text-danger"></span>
+					</div>
+				</div>
+
+				<!-- Button -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for=""></label>
+					<div class="col-md-4">
+						<button id="" name="" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+
+			</fieldset>
+		</form>
+		<p>Employees:</p>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>MOBILE</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="employee : ${list}">
+					<td th:text="${employee.id}"></td>
+					<td th:text="${employee.name}"></td>
+					<td th:text="${employee.mobile}"></td>
+					<td><a th:href="@{/{id}(id=${employee.id})}">Modify</a></td>
+					<td><a th:href="@{delete/{id}(id=${employee.id})}">Delete</a></td>
+				</tr>
+
+			</tbody>
+		</table>
+
+	</div>
+</body>
+</html>
